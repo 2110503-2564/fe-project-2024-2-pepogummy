@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState } from 'react';
 import styles from './banner.module.css';
 import Image from 'next/image';
@@ -7,30 +7,42 @@ import { useSession } from 'next-auth/react';
 
 export default function Banner() {
   const [banner, setBanner] = useState(0);
-  const bannerList = [
-    '/img/cover.jpg',
-    '/img/cover2.jpg',
-    '/img/cover3.jpg',
-    '/img/cover4.jpg',
-  ]
   const router = useRouter();
   const { data: session } = useSession();
-  console.log(session?.user.token)
+
   return (
-    <div className={styles.Banner} onClick={()=> {setBanner((banner+1)%4)}} >
-        <Image src={bannerList[banner]} alt='cover' fill={true} objectFit='cover'/>
-        <div className={styles.BannerText}>
-            <h1 className='text-3xl'>where every event finds its venue</h1>
-            <h3 className='text-xl'>Finding the perfect venue has never been easier. Whether It's a wedding, corperate event, or private party, we connecting people to the perfect place.</h3>
+    <div
+      className={styles.Banner}
+    >
+      <Image
+        src={"/img/cover4.jpeg"}
+        alt='cover4'
+        fill={true}
+        objectFit='cover'
+        className='brightness-75'
+      />
+      <div className={styles.BannerText}>
+        <h1 className='text-5xl font-bold text-white mb-4 drop-shadow-lg'>
+          Your Adventure Awaits
+        </h1>
+        <h3 className='text-2xl text-white max-w-2xl text-center drop-shadow-lg'>
+          Discover the perfect campground for your next outdoor escape. Whether it's a family trip, a romantic getaway, or a solo adventure, we've got you covered.
+        </h3>
+      </div>
+      {session && (
+        <div className='z-30 absolute top-4 right-4 text-2xl text-white font-semibold drop-shadow-lg'>
+          Welcome, {session.user?.name}!
         </div>
-        {
-          session ? <div className='z-30 absolute top-[12px] right-[12px] text-2xl'>Welcome {session.user?.name} </div> : null
-        }
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-30 absolute bottom-[12px] right-[12px]" 
-      onClick={(e)=> {router.push('/venue'); e.stopPropagation()}}>
-        Select Venue
+      )}
+      <button
+        className='z-30 absolute bottom-8 right-8 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105'
+        onClick={(e) => {
+          router.push('/venue');
+          e.stopPropagation();
+        }}
+      >
+        Explore Campgrounds
       </button>
     </div>
-
-  )
+  );
 }
