@@ -15,7 +15,7 @@ export default async function TopMenu() {
         <div className="text-2xl font-bold text-blue-600">Campground Booking</div>
         </Link>
         <TopMenuItem title="My Booking" pageRef="/mybooking" />
-        <TopMenuItem title="Booking" pageRef="/booking" />
+        <TopMenuItem title="Booking" pageRef="/campbooking" />
       </div>
 
       {/* Right Section */}
