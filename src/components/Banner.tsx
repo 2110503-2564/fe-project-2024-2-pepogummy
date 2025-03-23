@@ -36,7 +36,7 @@ export default function Banner() {
       <button
         className='z-30 absolute bottom-8 right-8 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105'
         onClick={(e) => {
-          router.push('/venue');
+          router.push('/campground');
           e.stopPropagation();
         }}
       >

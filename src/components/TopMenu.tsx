@@ -9,7 +9,6 @@ export default async function TopMenu() {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-30 h-[60px] bg-white shadow-md flex items-center justify-between px-8">
-      {/* Left Section */}
       <div className="flex items-center space-x-8">
         <Link href={'/'}>
         <div className="text-2xl font-bold text-blue-600">Campground Booking</div>
@@ -18,13 +17,9 @@ export default async function TopMenu() {
         <TopMenuItem title="Booking" pageRef="/campbooking" />
       </div>
 
-      {/* Right Section */}
       <div className="flex items-center space-x-6">
         {session ? (
           <>
-            <div className="text-gray-700">
-              Status: <span className="font-semibold">{session.user?.role}</span>
-            </div>
             <Link href="/api/auth/signout">
               <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
                 Sign Out ({session.user?.name})

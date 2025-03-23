@@ -1,22 +1,19 @@
-export interface VenueItem {
-    _id: string,
-    name: string,
-    address: string,
-    district: string,
-    province: string,
-    postalcode: string,
-    tel: string,
-    picture: string,
-    dailyrate: number,
-    __v: number,
-    id: string
+export interface CampgroundItem {
+  _id: string;
+  name: string;
+  address: string;
+  district: string;
+  province: string;
+  postalcode: string;
+  tel: string;
+  region: string;
   }
   
-export interface VenueJson {
+export interface CampgroundJson {
     success: boolean,
     count: number,
     pagination: Object,
-    data: VenueItem[]
+    data: CampgroundItem[]
   }
   
 export interface BookingItem {
@@ -26,12 +23,3 @@ export interface BookingItem {
     bookDate: string;
   }
 
-  export interface CampGroundItem {
-    name: string;
-    address: string;
-    district: string;
-    province: string;
-    postalcode: string;
-    tel: string;
-    region: string;
-  }
