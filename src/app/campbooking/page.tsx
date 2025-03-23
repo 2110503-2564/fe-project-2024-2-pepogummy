@@ -1,103 +1,136 @@
 "use client";
 import DateReserve from "@/components/DateReserve";
-import { Select, MenuItem, TextField, Button } from "@mui/material";
-import { useState } from "react";
+import { Select, MenuItem, Button, CircularProgress } from "@mui/material";
+import { useState, useEffect } from "react";
 import { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
-import { BookingItem } from "../../../interface";
-import { addBooking } from "@/redux/features/bookSlice";
+import { CampgroundItem } from "../../../interface";
+import getCampgrounds from "@/libs/getCampgrounds";
+import createBooking from "@/libs/createBooking";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
-  const [nameLastname, setNameLastname] = useState<string | null>(null);
-  const [tel, setTel] = useState<string | null>(null);
-  const [venue, setVenue] = useState<string | null>(null);
+  const { data: session } = useSession();
+  const [campgrounds, setCampgrounds] = useState<CampgroundItem[]>([]);
+  const [campgroundId, setCampgroundId] = useState<string>("");
   const [bookDate, setBookDate] = useState<Dayjs | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    const fetchCampgrounds = async () => {
+      try {
+        const response = await getCampgrounds();
+        if (response.success) {
+          setCampgrounds(response.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch campgrounds:", error);
+        setError("Failed to load campgrounds");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCampgrounds();
+  }, []);
 
-  const makeReservation = () => {
-    if (nameLastname && tel && venue && bookDate) {
-      const item: BookingItem = {
-        nameLastname: nameLastname,
-        tel: tel,
-        venue: venue,
-        bookDate: dayjs(bookDate).format("YYYY/MM/DD"),
-      };
-      dispatch(addBooking(item));
+  const handleBooking = async () => {
+    if (!session || !session.user.token) {
+      setError("Please login to make a booking");
+      return;
     }
-  };
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNameLastname(event.target.value);
-  };
+    if (!campgroundId || !bookDate) {
+      setError("Please select a campground and date");
+      return;
+    }
 
-  const handleTelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTel(event.target.value);
+    if (bookDate.isBefore(dayjs().startOf('day'))) {
+      setError("Cannot book a past date");
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      setError("");
+      
+      await createBooking(
+        dayjs(bookDate).toDate(),
+        campgroundId,
+        session.user._id,
+        session.user.token
+      );
+
+      alert("Booking created successfully!");
+      
+    } catch (err) {
+      console.error("Booking failed:", err);
+      setError(err instanceof Error ? err.message : "Booking failed");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4"
-    style={{
+      style={{
         backgroundImage: "url('/img/cover.jpeg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-        
       <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Book Your CampGround
+          Book Your Campground
         </h1>
 
-        <TextField
-          name="Name-Lastname"
-          label="Name-Lastname"
-          variant="outlined"
-          fullWidth
-          value={nameLastname}
-          className="mb-4"
-          onChange={handleNameChange}
-        />
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
+            {error}
+          </div>
+        )}
 
-        <TextField
-          name="Contact-Number"
-          label="Contact-Number"
-          variant="outlined"
-          fullWidth
-          value={tel}
-          className="mb-4"
-          onChange={handleTelChange}
-        />
+        {loading ? (
+          <div className="text-center">
+            <CircularProgress />
+            <p className="mt-2">Loading campgrounds...</p>
+          </div>
+        ) : (
+          <>
+            <Select
+              variant="outlined"
+              fullWidth
+              value={campgroundId}
+              onChange={(e) => setCampgroundId(e.target.value)}
+              className="mb-4"
+              displayEmpty
+            >
+              <MenuItem value="" disabled>
+                Select Campground
+              </MenuItem>
+              {campgrounds.map((cg) => (
+                <MenuItem key={cg._id} value={cg._id}>
+                  {cg.name}
+                </MenuItem>
+              ))}
+            </Select>
 
-        <Select
-          variant="outlined"
-          fullWidth
-          id="venue"
-          name="venue"
-          value={venue}
-          onChange={(e) => setVenue(e.target.value)}
-          className="mb-4"
-        >
-          <MenuItem value="Bloom">The Bloom Pavilion</MenuItem>
-          <MenuItem value="Spark">Spark Space</MenuItem>
-          <MenuItem value="GrandTable">The Grand Table</MenuItem>
-        </Select>
+            <DateReserve
+              onDateChange={(value: Dayjs) => setBookDate(value)}
+            />
 
-        <DateReserve
-          onDateChange={(value: Dayjs) => setBookDate(value)}
-          className="mb-6"
-        />
-
-        <Button
-          variant="contained"
-          fullWidth
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2"
-          onClick={makeReservation}
-        >
-          Book CampGround
-        </Button>
+            <Button
+              variant="contained"
+              fullWidth
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2"
+              onClick={handleBooking}
+              disabled={submitting || !campgroundId || !bookDate}
+            >
+              {submitting ? <CircularProgress size={24} /> : "Book Campground"}
+            </Button>
+          </>
+        )}
       </div>
     </main>
   );

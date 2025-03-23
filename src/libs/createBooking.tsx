@@ -1,17 +1,34 @@
-export default async function createBooking(apptDate: Date, campground: string, token: string) {
-    const response = await fetch("http://campgroundbooking.us-east-1.elasticbeanstalk.com/api/v1/bookings", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-            apptDate,
-            campground
-        }),
-    });
-    if (!response.ok) {
-        throw new Error("Failed to create booking");
+export default async function createBooking(
+  apptDate: Date,
+  campgroundId: string,
+  user: string,
+  token: string
+) {
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+  if (apptDate < currentDate) {
+    throw new Error("Cannot book a past date");
+  }
+
+  const response = await fetch(
+    `http://campgroundbooking.us-east-1.elasticbeanstalk.com/api/v1/campgrounds/${campgroundId}/bookings`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        apptDate: apptDate.toISOString(),
+        user
+      }),
     }
-    return await response.json();
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to create booking");
+  }
+
+  return await response.json();
 }

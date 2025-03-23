@@ -32,8 +32,30 @@ export interface CampgroundJson {
 }
 
 export interface BookingItem {
-  nameLastname: string;
-  tel: string;
-  venue: string;
-  bookDate: string;
+  _id: string;
+  apptDate: string;
+  createdAt: string;
+  user: {
+    _id: string;
+    name: string;
+    email: string;
+    tel: string;
+  };
+  campground: CampgroundItem;
+}
+
+export interface BookingJson {
+  success: boolean;
+  count: number;
+  data: BookingItem[];
+}
+
+export interface BookingUpdateResponse {
+  success: boolean;
+  data: BookingItem;
+}
+
+export interface UpdateBookingData {
+  apptDate: string;
+  campground: string;
 }

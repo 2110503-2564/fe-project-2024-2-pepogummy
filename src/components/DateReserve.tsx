@@ -10,16 +10,17 @@ export default function DateReserve( { onDateChange } : { onDateChange : Functio
   return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
+          disablePast
           sx={{
             width: "100%",
             mt: 1,
             backgroundColor: "white",
             borderRadius: 1,
           }}
-          onChange={((value) => {
+          onChange={(value) => {
             setReserveDate(value);
             onDateChange(value);
-          } )}
+          }}
         />
       </LocalizationProvider>
   );
