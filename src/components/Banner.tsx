@@ -28,11 +28,6 @@ export default function Banner() {
           Discover the perfect campground for your next outdoor escape. Whether it's a family trip, a romantic getaway, or a solo adventure, we've got you covered.
         </h3>
       </div>
-      {session && (
-        <div className='z-30 absolute top-4 right-4 text-2xl text-white font-semibold drop-shadow-lg'>
-          Welcome, {session.user?.name}!
-        </div>
-      )}
       <button
         className='z-30 absolute bottom-8 right-8 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105'
         onClick={(e) => {

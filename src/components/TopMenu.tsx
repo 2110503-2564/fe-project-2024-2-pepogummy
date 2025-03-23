@@ -22,7 +22,7 @@ export default async function TopMenu() {
           <>
             <Link href="/api/auth/signout">
               <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
-                Sign Out ({session.user?.name})
+                Sign Out
               </button>
             </Link>
           </>
@@ -33,7 +33,7 @@ export default async function TopMenu() {
                 Sign In
               </button>
             </Link>
-            <Link href="/api/auth/signup">
+            <Link href="/signup">
               <button className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
                 Sign Up
               </button>
