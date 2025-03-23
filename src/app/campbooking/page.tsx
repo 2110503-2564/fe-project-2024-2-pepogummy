@@ -48,7 +48,7 @@ export default function Page() {
         
       <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Book Your Venue
+          Book Your CampGround
         </h1>
 
         <TextField
@@ -96,7 +96,7 @@ export default function Page() {
           className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2"
           onClick={makeReservation}
         >
-          Book Venue
+          Book CampGround
         </Button>
       </div>
     </main>
