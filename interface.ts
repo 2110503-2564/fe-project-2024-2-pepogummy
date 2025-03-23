@@ -18,10 +18,20 @@ export interface VenueJson {
     pagination: Object,
     data: VenueItem[]
   }
-
+  
 export interface BookingItem {
     nameLastname: string;
     tel: string;
     venue: string;
     bookDate: string;
+  }
+
+  export interface CampGroundItem {
+    name: string;
+    address: string;
+    district: string;
+    province: string;
+    postalcode: string;
+    tel: string;
+    region: string;
   }
