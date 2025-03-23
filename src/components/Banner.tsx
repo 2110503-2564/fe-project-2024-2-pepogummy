@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 export default function Banner() {
-  const [banner, setBanner] = useState(0);
   const router = useRouter();
   const { data: session } = useSession();
 

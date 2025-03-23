@@ -11,7 +11,9 @@ export default async function TopMenu() {
     <div className="fixed top-0 left-0 right-0 z-30 h-[60px] bg-white shadow-md flex items-center justify-between px-8">
       {/* Left Section */}
       <div className="flex items-center space-x-8">
+        <Link href={'/'}>
         <div className="text-2xl font-bold text-blue-600">Campground Booking</div>
+        </Link>
         <TopMenuItem title="My Booking" pageRef="/mybooking" />
         <TopMenuItem title="Booking" pageRef="/booking" />
       </div>
