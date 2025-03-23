@@ -14,6 +14,7 @@ export default function DateReserve( { onDateChange } : { onDateChange : Functio
           sx={{
             width: "100%",
             mt: 1,
+            mb: 3,
             backgroundColor: "white",
             borderRadius: 1,
           }}

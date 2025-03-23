@@ -80,8 +80,8 @@ export default function Page() {
         backgroundPosition: "center",
       }}
     >
-      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md opacity-[90%]">
+        <h1 className="text-2xl font-bold text-center text-slate-500 mb-6">
           Book Your Campground
         </h1>
 
