@@ -24,7 +24,7 @@ export default function TopMenu() {
           setLoading(false);
         }
       } else {
-        setLoading(false);  // Ensure loading is false if there's no token
+        setLoading(false);
       }
     };
 
