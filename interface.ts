@@ -35,12 +35,7 @@ export interface BookingItem {
   _id: string;
   apptDate: string;
   createdAt: string;
-  user: {
-    _id: string;
-    name: string;
-    email: string;
-    tel: string;
-  };
+  user: User;
   campground: CampgroundItem;
 }
 
@@ -58,4 +53,24 @@ export interface BookingUpdateResponse {
 export interface UpdateBookingData {
   apptDate: string;
   campground: string;
+}
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+  tel: string;
+  role: string;
+}
+
+export interface SessionUser {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  token: string;
+}
+
+export interface CampgroundWithBookings extends CampgroundItem {
+  bookings: BookingItem[];
 }

@@ -6,28 +6,60 @@ export default async function CampgroundDetailPage({ params }: { params: { campi
     const campgroundDetail: CampgroundResponse = await getCampground(params.campid);
 
     return (
-      <main className="max-w-4xl mx-auto p-5 text-gray-800">
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h1 className="text-3xl font-bold mb-4">{campgroundDetail.data.name}</h1>
-          
-          <div className="grid grid-cols-2 gap-4 text-lg">
-            <div className="col-span-2">
-              <span className="font-semibold">Address:</span> {campgroundDetail.data.address}
-            </div>
-            <div>
-              <span className="font-semibold">District:</span> {campgroundDetail.data.district}
-            </div>
-            <div>
-              <span className="font-semibold">Province:</span> {campgroundDetail.data.province}
-            </div>
-            <div>
-              <span className="font-semibold">Postal Code:</span> {campgroundDetail.data.postalcode}
-            </div>
-            <div>
-              <span className="font-semibold">Region:</span> {campgroundDetail.data.region}
-            </div>
-            <div>
-              <span className="font-semibold">Tel:</span> {campgroundDetail.data.tel}
+      <main className="max-w-4xl mx-auto p-5">
+        {/* Card Container */}
+        <div className="bg-white rounded-xl shadow-2xl overflow-hidden mb-16 mt-16">
+          {/* Header Section */}
+          <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-6">
+            <h1 className="text-3xl font-bold text-white">
+              {campgroundDetail.data.name}
+            </h1>
+          </div>
+
+          {/* Details Section */}
+          <div className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
+              {/* Address */}
+              <div className="col-span-2">
+                <p className="text-lg">
+                  <span className="font-semibold text-blue-600">Address:</span> {campgroundDetail.data.address}
+                </p>
+              </div>
+
+              {/* District */}
+              <div>
+                <p className="text-lg">
+                  <span className="font-semibold text-blue-600">District:</span> {campgroundDetail.data.district}
+                </p>
+              </div>
+
+              {/* Province */}
+              <div>
+                <p className="text-lg">
+                  <span className="font-semibold text-blue-600">Province:</span> {campgroundDetail.data.province}
+                </p>
+              </div>
+
+              {/* Postal Code */}
+              <div>
+                <p className="text-lg">
+                  <span className="font-semibold text-blue-600">Postal Code:</span> {campgroundDetail.data.postalcode}
+                </p>
+              </div>
+
+              {/* Region */}
+              <div>
+                <p className="text-lg">
+                  <span className="font-semibold text-blue-600">Region:</span> {campgroundDetail.data.region}
+                </p>
+              </div>
+
+              {/* Tel */}
+              <div>
+                <p className="text-lg">
+                  <span className="font-semibold text-blue-600">Tel:</span> {campgroundDetail.data.tel}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -35,11 +67,12 @@ export default async function CampgroundDetailPage({ params }: { params: { campi
     );
   } catch (error) {
     return (
-      <main className="max-w-4xl mx-auto p-5 text-gray-800">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-          <p className="font-semibold">Error:</p>
-          <p>{(error as Error).message}</p>
-          <p className="mt-2 text-sm">Campground ID: {params.campid}</p>
+      <main className="max-w-4xl mx-auto p-5">
+        {/* Error Message */}
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
+          <p className="font-semibold text-red-700">Error:</p>
+          <p className="text-red-600">{(error as Error).message}</p>
+          <p className="mt-2 text-sm text-red-600">Campground ID: {params.campid}</p>
         </div>
       </main>
     );

@@ -8,15 +8,23 @@ import { CampgroundItem } from "../../../interface";
 import getCampgrounds from "@/libs/getCampgrounds";
 import createBooking from "@/libs/createBooking";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [campgrounds, setCampgrounds] = useState<CampgroundItem[]>([]);
   const [campgroundId, setCampgroundId] = useState<string>("");
   const [bookDate, setBookDate] = useState<Dayjs | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/api/auth/signin");
+    }
+  }, [status, router]);
 
   useEffect(() => {
     const fetchCampgrounds = async () => {
@@ -32,8 +40,19 @@ export default function Page() {
         setLoading(false);
       }
     };
-    fetchCampgrounds();
-  }, []);
+    
+    if (status === "authenticated") {
+      fetchCampgrounds();
+    }
+  }, [status]);
+
+  if (status === "loading") {
+    return (
+      <div className="w-full min-h-screen flex flex-col items-center justify-center">
+        <CircularProgress />
+      </div>
+    );
+  }
 
   const handleBooking = async () => {
     if (!session || !session.user.token) {
@@ -80,8 +99,8 @@ export default function Page() {
         backgroundPosition: "center",
       }}
     >
-      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md opacity-[90%]">
+        <h1 className="text-2xl font-bold text-center text-slate-500 mb-6">
           Book Your Campground
         </h1>
 

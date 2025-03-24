@@ -12,7 +12,6 @@ export default function RegisterPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
 
-  // Validation patterns
   const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const telPattern = /^0[689]\d{8}$|^0[689]-\d{3}-\d{4}$/;
 
@@ -49,7 +48,7 @@ export default function RegisterPage() {
 
   return (
     <main className="min-h-screen bg-gray-100 py-8">
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+      <div className="max-w-sm mx-auto bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
           Create Account
         </h1>
