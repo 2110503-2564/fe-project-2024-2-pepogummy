@@ -8,7 +8,7 @@ export default async function CampgroundDetailPage({ params }: { params: { campi
     return (
       <main className="max-w-4xl mx-auto p-5">
         {/* Card Container */}
-        <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
+        <div className="bg-white rounded-xl shadow-2xl overflow-hidden mb-16 mt-16">
           {/* Header Section */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-6">
             <h1 className="text-3xl font-bold text-white">

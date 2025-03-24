@@ -12,7 +12,7 @@ export default async function CampgroundCatalog({ campgroundsJson }: { campgroun
             <p className='text-lg text-center text-gray-600 mb-8'>
                 Explore {count} campgrounds
             </p>
-            <div className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
                 {data.map((campground) => (
                     <Link 
                         href={`/campground/${campground._id}`}
