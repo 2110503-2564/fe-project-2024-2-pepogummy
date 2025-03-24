@@ -1,9 +1,12 @@
-import CreateCampgroundForm from "@/components/CreateCampgroundForm";
+"use client";
+import CreateCampgroundForm from "../../components/CreateCampgroundForm";
 
-export default function CreateCampgroundPage() {
-    return (
-        <div className="p-4">
-            <CreateCampgroundForm />
-        </div>
-    );
-}
+const CreateCampgroundPage = () => {
+  return (
+    <div className="container mx-auto py-8">
+      <CreateCampgroundForm />
+    </div>
+  );
+};
+
+export default CreateCampgroundPage;
