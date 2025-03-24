@@ -35,7 +35,7 @@ export interface BookingItem {
   _id: string;
   apptDate: string;
   createdAt: string;
-  user: User;
+  user: string;
   campground: CampgroundItem;
 }
 

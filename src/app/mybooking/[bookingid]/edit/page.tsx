@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useParams } from "next/navigation";
@@ -18,7 +18,7 @@ export default function EditBookingPage() {
   const bookingid = params.bookingid as string;
   const [date, setDate] = useState<Dayjs | null>(null);
   const [campgrounds, setCampgrounds] = useState<CampgroundItem[]>([]);
-  const [selectedCampground, setSelectedCampground] = useState("");
+  const [selectedCampground, setSelectedCampground] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -27,9 +27,7 @@ export default function EditBookingPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [campgroundsResponse] = await Promise.all([
-          getCampgrounds(),
-        ]);
+        const [campgroundsResponse] = await Promise.all([getCampgrounds()]);
         
         setCampgrounds(campgroundsResponse.data);
         setInitialLoading(false);
@@ -112,12 +110,14 @@ export default function EditBookingPage() {
                 onChange={(e) => setSelectedCampground(e.target.value)}
                 className="bg-white"
                 displayEmpty
-                renderValue={(value) => 
-                    value ? value : (
-                    <span>Select Campground</span>
-                    )
-                }
-                >
+                renderValue={(value) => {
+                    if (!value) return <span>Select Campground</span>;
+
+                    // Find campground by selected ID
+                    const campground = campgrounds.find((cg) => cg._id === value);
+                    return campground ? campground.name : "Campground Not Found";
+                }}
+            >
                 <MenuItem value="" disabled>
                     Select Campground
                 </MenuItem>
