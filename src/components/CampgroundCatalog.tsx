@@ -9,27 +9,25 @@ export default async function CampgroundCatalog({ campgroundsJson }: { campgroun
 
     return (
         <div className='py-4'>
-            <p className='text-lg text-center text-gray-600 mb-4'>
+            <p className='text-lg text-center text-gray-600 mb-8'>
                 Explore {count} campgrounds
             </p>
-            <div className="px-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {data.map((campground) => {
-                return (
+            <div className="px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {data.map((campground) => (
                     <Link 
-                    href={`/campground/${campground._id}`}
-                    key={campground._id}
-                    className='hover:shadow-md transition-shadow'
+                        href={`/campground/${campground._id}`}
+                        key={campground._id}
+                        className='hover:shadow-lg transition-shadow duration-300'
                     >
-                    <Card 
-                        campgroundName={campground.name}
-                        address={campground.address}
-                        province={campground.province}
-                        tel={campground.tel}
-                    />
+                        <Card
+                            campgroundName={campground.name}
+                            address={campground.address}
+                            province={campground.province}
+                            tel={campground.tel}
+                        />
                     </Link>
-                )
-                })}
+                ))}
             </div>
         </div>
-    )
+    );
 }
