@@ -10,6 +10,8 @@ import { Select, MenuItem, CircularProgress } from "@mui/material";
 import getCampgrounds from "@/libs/getCampgrounds";
 import { CampgroundItem } from "../../../../../interface";
 import { UpdateBookingData } from "../../../../../interface";
+import { Tent, Calendar, MapPin, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function EditBookingPage() {
   const { data: session } = useSession();
@@ -21,14 +23,12 @@ export default function EditBookingPage() {
   const [selectedCampground, setSelectedCampground] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [campgroundsResponse] = await Promise.all([getCampgrounds()]);
-        
         setCampgrounds(campgroundsResponse.data);
         setInitialLoading(false);
       } catch (error) {
@@ -44,7 +44,7 @@ export default function EditBookingPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!bookingid || !session?.user.token || !date || !selectedCampground) {
-      setError("Missing required information");
+      setError("Please fill all required fields");
       return;
     }
 
@@ -77,66 +77,94 @@ export default function EditBookingPage() {
 
   if (initialLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-amber-50 flex items-center justify-center">
         <div className="text-center">
-          <CircularProgress />
-          <p className="mt-4 text-gray-600">Loading booking information...</p>
+          <CircularProgress className="text-amber-700" />
+          <p className="mt-4 text-amber-800">Loading booking information...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Edit Booking
-        </h1>
+    <div className="min-h-screen bg-amber-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md border border-amber-200">
+        <Link href="/mybooking" className="flex items-center text-amber-700 hover:text-amber-900 mb-4">
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to bookings
+        </Link>
+
+        <div className="flex items-center justify-center mb-6">
+          <Tent className="h-8 w-8 text-amber-700 mr-3" />
+          <h1 className="text-2xl font-bold text-amber-900">
+            Edit Reservation
+          </h1>
+        </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm border border-red-200">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-amber-700 mb-2 flex items-center">
+              <MapPin className="mr-2 h-4 w-4" />
               Campground
             </label>
             <Select
-                fullWidth
-                value={selectedCampground}
-                onChange={(e) => setSelectedCampground(e.target.value)}
-                className="bg-white"
-                displayEmpty
-                renderValue={(value) => {
-                    if (!value) return <span>Select Campground</span>;
-
-                    // Find campground by selected ID
-                    const campground = campgrounds.find((cg) => cg._id === value);
-                    return campground ? campground.name : "Campground Not Found";
-                }}
+              fullWidth
+              value={selectedCampground}
+              onChange={(e) => setSelectedCampground(e.target.value)}
+              className="bg-amber-50"
+              displayEmpty
+              sx={{
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#d97706',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#b45309',
+                }
+              }}
+              renderValue={(value) => {
+                if (!value) return <span className="text-amber-500">Select Campground</span>;
+                const campground = campgrounds.find((cg) => cg._id === value);
+                return <span className="text-amber-900">{campground ? campground.name : "Not Found"}</span>;
+              }}
             >
-                <MenuItem value="" disabled>
-                    Select Campground
+              <MenuItem value="" disabled>
+                <span className="text-amber-500">Choose your campsite</span>
+              </MenuItem>
+              {campgrounds.map((cg) => (
+                <MenuItem key={cg._id} value={cg._id}>
+                  {cg.name}
                 </MenuItem>
-                {campgrounds.map((cg) => (
-                    <MenuItem key={cg._id} value={cg._id}>
-                    {cg.name}
-                    </MenuItem>
-                ))}
+              ))}
             </Select>
           </div>
 
-          <DateReserve onDateChange={(value: Dayjs) => setDate(value)} />
+          <div>
+            <label className="block text-sm font-medium text-amber-700 mb-2 flex items-center">
+              <Calendar className="mr-2 h-4 w-4" />
+              Booking Date
+            </label>
+            <DateReserve onDateChange={(value: Dayjs) => setDate(value)} />
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-300"
+            className="w-full bg-[#8B5A2B] hover:bg-[#A67C52] text-amber-100 py-3 px-4 rounded-lg shadow-md transition-colors disabled:bg-amber-300 disabled:text-amber-50 flex items-center justify-center"
           >
-            {loading ? "Updating..." : "Update Booking"}
+            {loading ? (
+              <>
+                <CircularProgress size={20} className="text-amber-100 mr-2" />
+                Updating...
+              </>
+            ) : (
+              "Update Reservation"
+            )}
           </button>
         </form>
       </div>
