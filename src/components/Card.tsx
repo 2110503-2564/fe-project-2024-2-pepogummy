@@ -40,7 +40,7 @@ export default function Card({
                 {/* Content */}
                 <div className="relative z-10">
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-amber-900 font-serif tracking-wide">
+                    <h3 className="text-xl font-bold text-amber-900 tracking-wide">
                         {campgroundName}
                     </h3>
                     

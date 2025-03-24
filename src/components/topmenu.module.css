@@ -1,20 +1,26 @@
-.logoimg {
-    height: 100%;
-    width: auto;
-}
-
 .itemcontainer {
-    width: 120px;
-    text-align: center;
-    margin-top: auto;
-    margin-bottom: auto;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 10pt;
-    color: grey;
-}
+    position: relative;
+    padding: 0.5rem 0;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #92400e; /* amber-800 */
+    transition: width 0.3s ease;
+  }
+  
+  .itemcontainer:hover .underline {
+    width: 100%;
+  }
+  
+  .itemcontainer:hover {
+    transform: translateY(-1px);
+  }
 
-.itemcontainer:hover {
-    color: black;
-    transform: scale(1.1);
-    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
-}
