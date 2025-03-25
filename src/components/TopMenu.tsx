@@ -60,8 +60,8 @@ export default function TopMenu() {
 
         {role === "admin" && (
           <TopMenuItem
-            title="Create Campground"
-            pageRef="/createcampground"
+            title="Manage Campground"
+            pageRef="/managecampground"
             icon={<MapPin className="mr-1 h-4 w-4" />}
           />
         )}

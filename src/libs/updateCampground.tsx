@@ -1,5 +1,5 @@
 export default async function updateCampground(id: string, data: any, token: string) {
-    const response = await fetch(`http://campgroundbooking.us-east-1.elasticbeanstalk.com/api/v1/venues/${id}`, {
+    const response = await fetch(`http://campgroundbooking.us-east-1.elasticbeanstalk.com/api/v1/campgrounds/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
