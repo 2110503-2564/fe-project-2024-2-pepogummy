@@ -69,7 +69,7 @@ export default function TopMenu() {
 
       <div className="flex items-center space-x-4">
         {session ? (
-          <Link href="/api/auth/signout">
+          <Link href="/signout">
             <button className="flex items-center bg-amber-700 hover:bg-amber-800 text-amber-50 font-medium py-2 px-4 rounded-lg transition duration-300 border border-amber-800">
               <LogOut className="mr-2 h-4 w-4" />
               Sign Out
