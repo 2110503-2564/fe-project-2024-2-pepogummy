@@ -3,7 +3,7 @@ import { CampgroundResponse } from "../../interface";
 export default async function getCampground(id: string): Promise<CampgroundResponse> {
     try {
       const response = await fetch(
-        `http://campgroundbooking.us-east-1.elasticbeanstalk.com/api/v1/campgrounds/${id}`,
+        `${process.env.BACKEND_URL}/api/v1/campgrounds/${id}`,
         {
           headers: {
             'Content-Type': 'application/json',

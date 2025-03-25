@@ -1,5 +1,5 @@
 export default async function userLogIn(userEmail:string, userPassword:string){
-    const response = await fetch("http://campgroundbooking.us-east-1.elasticbeanstalk.com/api/v1/auth/login", {
+    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

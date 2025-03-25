@@ -11,7 +11,7 @@ export default async function createBooking(
   }
 
   const response = await fetch(
-    `http://campgroundbooking.us-east-1.elasticbeanstalk.com/api/v1/campgrounds/${campgroundId}/bookings`,
+    `${process.env.BACKEND_URL}/api/v1/campgrounds/${campgroundId}/bookings`,
     {
       method: "POST",
       headers: {

@@ -1,5 +1,5 @@
 export default async function userRegister(name: string, email: string, tel: string, password: string) {
-    const response = await fetch("http://campgroundbooking.us-east-1.elasticbeanstalk.com/api/v1/auth/register", {
+    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/auth/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
